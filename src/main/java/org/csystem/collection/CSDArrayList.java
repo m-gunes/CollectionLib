@@ -72,25 +72,40 @@ public class CSDArrayList<E> implements List<E> {
     @Override
     public boolean remove(Object o)
     {
-        throw new UnsupportedOperationException("TODO");
+        // throw new UnsupportedOperationException("TODO");
+        int index = indexOf(o);
+        return remove(index) == o;
     }
 
     @Override
     public boolean containsAll(Collection<?> c)
     {
-        throw new UnsupportedOperationException("TODO");
+        // throw new UnsupportedOperationException("TODO");
+        for (var item : c)
+            if(!contains(item))
+                return false;
+
+        return true;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c)
     {
-        throw new UnsupportedOperationException("TODO");
+        // throw new UnsupportedOperationException("TODO");
+        for (var element: c)
+            add(element); // Todo: optimise it!
+
+        return true;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c)
     {
-        throw new UnsupportedOperationException("TODO");
+        // throw new UnsupportedOperationException("TODO");
+        for (var element : c)
+            add(index++, element); // Todo: optimise it!
+
+        return true;
     }
 
     @Override
@@ -181,7 +196,12 @@ public class CSDArrayList<E> implements List<E> {
     @Override
     public int lastIndexOf(Object o)
     {
-        throw new UnsupportedOperationException("TODO");
+        // throw new UnsupportedOperationException("TODO");
+        for (int i = m_index; i > 0; --i)
+            if (Objects.equals(o, m_elements[i]))
+                return i;
+
+        return -1;
     }
 
     @Override
@@ -220,13 +240,15 @@ public class CSDArrayList<E> implements List<E> {
     @Override
     public boolean isEmpty()
     {
-        throw new UnsupportedOperationException("TODO");
+        // throw new UnsupportedOperationException("TODO");
+        return m_index == 0;
     }
 
     @Override
     public boolean contains(Object o)
     {
-        throw new UnsupportedOperationException("TODO");
+        // throw new UnsupportedOperationException("TODO");
+        return indexOf(o) != -1;
     }
 
     @Override
