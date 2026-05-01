@@ -58,7 +58,8 @@ public class CSDArrayList<E> implements List<E> {
 
     public CSDArrayList(Collection<? extends E> c)
     {
-        throw new UnsupportedOperationException("TODO");
+        // throw new UnsupportedOperationException("TODO");
+        System.arraycopy(c, 0, m_elements, 0, c.size());
     }
 
     @Override
@@ -111,7 +112,10 @@ public class CSDArrayList<E> implements List<E> {
     @Override
     public boolean removeAll(Collection<?> c)
     {
-        throw new UnsupportedOperationException("TODO");
+        // throw new UnsupportedOperationException("TODO");
+        c.forEach(e -> e = null);
+        m_index = 0;
+        return true;
     }
 
     @Override
