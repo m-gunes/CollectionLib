@@ -59,7 +59,8 @@ public class CSDArrayList<E> implements List<E> {
     public CSDArrayList(Collection<? extends E> c)
     {
         // throw new UnsupportedOperationException("TODO");
-        System.arraycopy(c, 0, m_elements, 0, c.size());
+        this(c.size());
+        addAll(c);
     }
 
     @Override
