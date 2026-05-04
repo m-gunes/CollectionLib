@@ -29,7 +29,7 @@ public class CSDArrayListNotNullable<E> extends ArrayList<E> {
 
     public CSDArrayListNotNullable()
     {
-        super();
+        // otomatik yapilacak, sadece var olmasi icin icini bos biraktik
     }
 
     public CSDArrayListNotNullable(Collection<? extends E> c)
