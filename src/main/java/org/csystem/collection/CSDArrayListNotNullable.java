@@ -34,6 +34,60 @@ public class CSDArrayListNotNullable<E> extends ArrayList<E> {
 
     public CSDArrayListNotNullable(Collection<? extends E> c)
     {
-        throw new UnsupportedOperationException("TODO:");
+        // throw new UnsupportedOperationException("TODO:");
+        nullCheck(c);
+        //...
+        // Todo: completed
     }
+
+    private void nullCheck(E element)
+    {
+        if (element == null)
+            throw new IllegalArgumentException("Null value is not acceptable");
+    }
+
+    private void nullCheck(Collection<? extends E> elements)
+    {
+        elements.forEach(this::nullCheck);
+    }
+
+    @Override
+    public E set(int index, E element)
+    {
+        nullCheck(element);
+        return super.set(index, element);
+    }
+
+    @Override
+    public boolean add(E e)
+    {
+        nullCheck(e);
+        return super.add(e);
+    }
+
+    @Override
+    public void add(int index, E element)
+    {
+        nullCheck(element);
+        super.add(index, element);
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends E> c)
+    {
+        nullCheck(c);
+        return super.addAll(c);
+    }
+
+    // indexOf null degerinide ariyor. Null deger tutulmayacagi icin aramasina gerek yok
+    @Override
+    public int indexOf(Object o)
+    {
+        nullCheck((E) o);
+        return super.indexOf(o);
+    }
+
+
+    // Todo: burada bir liste tutulmali mi?
+
 }
