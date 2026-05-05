@@ -2,6 +2,7 @@ package org.csystem.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 
 
 /**
@@ -79,15 +80,59 @@ public class CSDArrayListNotNullable<E> extends ArrayList<E> {
         return super.addAll(c);
     }
 
-    // indexOf null degerinide ariyor. Null deger tutulmayacagi icin aramasina gerek yok
+    // Since null is not exist in the list, we should check if null is searched by user
+    // Question is throwing exception is correct in this case?
+    // arama null yapiliyor diye exeption firlatmak mantikli olmaz gibi.
+    // bunun yerine eger deger null ise donguye girmeden direct -1 donen bir method mantikli olur mu?
+    // yani donguye girmeden sonucu olumsuz donmek eger deger null ise
     @Override
     public int indexOf(Object o)
     {
-        nullCheck((E) o);
+        // indexOf also looks for null if it exists in list. Since we are not allow null value, we need to override here.
+//        nullCheck((E) o);
+        if (o == null)
+            return -1;
+
         return super.indexOf(o);
     }
 
+    @Override
+    public boolean contains(Object o)
+    {
+        // contains calls indexOf, so we need to override
+        // nullCheck((E) o);
+        if (o == null)
+            return false;
+
+        return super.contains(o);
+    }
+
+    @Override
+    public int lastIndexOf(Object o)
+    {
+        // it looks null value.
+        // nullCheck((E)o);
+
+        if (o == null)
+            return -1;
+
+        return super.lastIndexOf(o);
+    }
+
+    /**
+     * @param o element to be checked, if null
+     */
+    @Override
+    public boolean remove(Object o)
+    {
+        if (o == null)
+            return false;
+
+        return super.remove(o);
+    }
 
     // Todo: burada bir liste tutulmali mi?
+    // cevap: hocanin ctor da super(initialCapacity) 'i kullanmasi aslinda ArrayListing icerisinde list tutulmasi gerektigini gosteriyor.
+
 
 }
