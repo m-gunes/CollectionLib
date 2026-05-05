@@ -1,5 +1,6 @@
-package org.csystem.collection;
+package org.csystem.collection.arraylist;
 
+import org.csystem.collection.CSDArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
