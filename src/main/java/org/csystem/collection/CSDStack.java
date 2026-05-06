@@ -13,6 +13,35 @@ import java.util.ArrayList;
  * <p>JavaSE'nin Stack<E> sınıfı kullanılmayacaktır.
  */
 // herhangi bir collection siniftan turemeyecek ama iceride kullanabilirsiniz. stack disinda
+
+/**
+public class CSDStack<E> {
+    public CSDStack()
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public E peek()
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public E pop()
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public E push(E item)
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public int search(E item)
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+}
+*/
 public class CSDStack<E> {
         // rule:
         // before the derived/sub/child class constructor,
@@ -27,33 +56,28 @@ public class CSDStack<E> {
 
     public CSDStack()
     {
-        // throw new UnsupportedOperationException("TODO");
         m_arrayListInstance = new ArrayList<E>();
     }
 
     public E peek()
     {
-        // throw new UnsupportedOperationException("TODO");
         return m_arrayListInstance.get(m_arrayListInstance.size() - 1);
     }
 
     public E pop()
     {
-        // throw new UnsupportedOperationException("TODO");
         return m_arrayListInstance.remove(m_arrayListInstance.size() - 1);
     }
 
     public E push(E item)
     {
-        // throw new UnsupportedOperationException("TODO");
         m_arrayListInstance.add(item);
         return item;
     }
 
     public int search(E item)
     {
-        // throw new UnsupportedOperationException("TODO");
         var index = m_arrayListInstance.lastIndexOf(item);
-        return index == -1 ? index : index + 1;
+        return index >= 0 ? m_arrayListInstance.size() - index : index;
     }
 }

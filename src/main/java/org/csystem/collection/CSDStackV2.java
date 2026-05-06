@@ -14,6 +14,35 @@ import java.util.Objects;
  * <p>JavaSE'nin Stack<E> sınıfı kullanılmayacaktır.
  */
 // herhangi bir collection siniftan turemeyecek ama iceride kullanabilirsiniz. stack disinda
+/**
+public class CSDStack<E> {
+    public CSDStack()
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public E peek()
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public E pop()
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public E push(E item)
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public int search(E item)
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+}
+*/
+
 public class CSDStackV2<E> {
         // rule:
         // before the derived/sub/child class constructor,
@@ -43,19 +72,16 @@ public class CSDStackV2<E> {
 
     public CSDStackV2()
     {
-         // throw new UnsupportedOperationException("TODO");
         m_elements = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
     public E peek()
     {
-         // throw new UnsupportedOperationException("TODO");
         return m_elements[m_elementSize-1];
     }
 
     public E pop()
     {
-         // throw new UnsupportedOperationException("TODO");
         var oldObj = peek();
         m_elements[--m_elementSize] = null;
         return oldObj;
@@ -63,7 +89,6 @@ public class CSDStackV2<E> {
 
     public E push(E item)
     {
-         // throw new UnsupportedOperationException("TODO");
         // check if list capacity is enough
         if (m_elements.length == m_elementSize)
             increaseCapacity();
@@ -74,7 +99,6 @@ public class CSDStackV2<E> {
 
     public int search(E item)
     {
-         // throw new UnsupportedOperationException("TODO");
 
 //        if (item == null) {
 //            for (int i = m_elementSize - 1; i >= 0; --i)
@@ -88,7 +112,7 @@ public class CSDStackV2<E> {
 
         for (int i = m_elementSize - 1; i >= 0; --i)
             if (Objects.equals(item, m_elements[i]))
-                return i+1;
+                return m_elementSize - i;
 
         return -1;
     }

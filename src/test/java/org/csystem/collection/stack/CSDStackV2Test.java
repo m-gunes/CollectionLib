@@ -35,6 +35,6 @@ public class CSDStackV2Test {
         stack.push(str);
 
         var index = stack.search(str);
-        Assertions.assertEquals(2, index);
+        Assertions.assertEquals(1, index);
     }
 }
