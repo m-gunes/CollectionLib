@@ -58,7 +58,7 @@ public class CSDMinStack<E> {
     private static final int DEFAULT_CAPACITY = 10;
     private static final int CAPACITY_FACTOR = 2;
     private E m_min;
-    private Comparator<E> m_comparator;
+    private Comparator<? super E> m_comparator;
     private E[] m_elements;
     private int m_elementSize;
 
@@ -70,9 +70,16 @@ public class CSDMinStack<E> {
         if (m_min == null) // for the first value
             m_min = item;
 
-//        else if (m_comparator != null)
-        else if (m_comparator.compare(item, m_min) < 0)
-            m_min = item;
+        else {
+            if (m_comparator == null) {
+                Comparable<E> cmp = (Comparable<E>) item;
+                if (cmp.compareTo(m_min) < 0)
+                    m_min = item;
+            } else {
+                if (m_comparator.compare(item, m_min) < 0)
+                    m_min = item;
+            }
+        }
     }
 
     private void increaseCapacity(int capacity)
@@ -86,20 +93,23 @@ public class CSDMinStack<E> {
             increaseCapacity(m_elements.length == 0 ? 1 : m_elements.length * CAPACITY_FACTOR);
     }
 
-//    public CSDMinStack()
-//    {
-//        //throw new UnsupportedOperationException("TODO: This assume that E is Comparable");
-//        m_elements = (E[]) new Object[DEFAULT_CAPACITY];
-//    }
+    public CSDMinStack()
+    {
+        //throw new UnsupportedOperationException("TODO: This assume that E is Comparable");
+        m_elements = (E[]) new Object[DEFAULT_CAPACITY];
+    }
 
     public CSDMinStack(Comparator<? super E> comparator)
     {
-        m_comparator = (Comparator<E>) comparator;
+        m_comparator = comparator;
         m_elements = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
     public E min()
     {
+        if (m_min == null)
+            throw new EmptyStackException();
+
         return m_min;
     }
 
