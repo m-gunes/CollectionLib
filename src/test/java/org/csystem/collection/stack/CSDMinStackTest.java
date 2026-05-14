@@ -27,4 +27,16 @@ public class CSDMinStackTest {
         stack.push(5);
         Assertions.assertEquals(3, stack.min());
     }
+
+    @Test
+    void givenValues_whenRemove_thenEqual()
+    {
+        var stack = new CSDMinStack<Integer>();
+        stack.push(7);
+        stack.push(5);
+        stack.push(11);
+        stack.push(3);
+        stack.pop();
+        Assertions.assertEquals(5, stack.min());
+    }
 }
