@@ -1,8 +1,6 @@
 package org.csystem.collection;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
+import java.util.*;
 
 
 /**
@@ -43,8 +41,7 @@ public class CSDArrayListNotNullable<E> extends ArrayList<E> {
 
     private void nullCheck(E element)
     {
-        if (element == null)
-            throw new IllegalArgumentException("Null value is not acceptable");
+        Optional.of(element).orElseThrow(IllegalArgumentException::new);
     }
 
     private void nullCheck(Collection<? extends E> elements)
