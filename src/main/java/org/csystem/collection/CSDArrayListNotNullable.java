@@ -29,14 +29,13 @@ public class CSDArrayListNotNullable<E> extends ArrayList<E> {
     public CSDArrayListNotNullable()
     {
         // otomatik yapilacak, sadece var olmasi icin icini bos biraktik
+        // deleyici implicit olarak bos ctor da sunu super() 'i cagiracak. yani taban sinifin ctor'u
     }
 
     public CSDArrayListNotNullable(Collection<? extends E> c)
     {
         // throw new UnsupportedOperationException("TODO:");
-        nullCheck(c);
-        //...
-        // Todo: completed
+        addAll(c);
     }
 
     private void nullCheck(E element)
@@ -73,7 +72,7 @@ public class CSDArrayListNotNullable<E> extends ArrayList<E> {
     @Override
     public boolean addAll(Collection<? extends E> c)
     {
-        nullCheck(c);
+        nullCheck(c); // burada araya girip null check yapmak Augmentation oluyor
         return super.addAll(c);
     }
 

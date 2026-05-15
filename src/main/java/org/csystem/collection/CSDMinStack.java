@@ -54,6 +54,8 @@ public class CSDMinStack<E> {
 //    what if before calling min, pop is called ?
 //    min stack will be gone! What you can do?
 //    Think about another stack to hold minimum elements
+    // Teacher notes:
+    // `Boyle bir Stack null tutamaz!` Compare yaparken null ile neyi compare edeceksiniz? Bu yuzden kodunuz patlar
 public class CSDMinStack<E> {
     private static final int DEFAULT_CAPACITY = 10;
     private static final int CAPACITY_FACTOR = 2;
@@ -83,7 +85,7 @@ public class CSDMinStack<E> {
 
     private void addWithComparable(E item)
     {
-        Comparable<E> cmp = (Comparable<E>) item;
+        Comparable<E> cmp = (Comparable<E>) item; // downcast
         int index = m_sortedListSize;
 
         while (index > 0) {
