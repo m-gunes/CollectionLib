@@ -76,7 +76,7 @@ public class CSDArrayList<E> implements List<E> {
     {
         // throw new UnsupportedOperationException("TODO");
         int index = indexOf(o);
-        return remove(index) == o;
+        return Objects.equals(o, remove(index));
     }
 
     @Override
