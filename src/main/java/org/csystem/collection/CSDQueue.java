@@ -51,9 +51,26 @@ public class CSDQueue<E> implements Queue {
     }
 
     @Override
-    public Iterator iterator()
+    public Iterator<E> iterator()
     {
-        return null;
+        return new Iterator<E>() {
+            int index;
+
+            @Override
+            public boolean hasNext()
+            {
+                return index < m_elementSize;
+            }
+
+            @Override
+            public E next()
+            {
+                if (!hasNext())
+                    throw new NoSuchElementException("No more item");
+
+                return m_elements[index++];
+            }
+        };
     }
 
 
@@ -125,7 +142,11 @@ public class CSDQueue<E> implements Queue {
     @Override
     public boolean containsAll(Collection c)
     {
-        return false;
+        for (var item : c)
+            if (!contains(item))
+                return false;
+
+        return true;
     }
 
     @Override
