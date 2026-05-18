@@ -21,7 +21,15 @@ public class CSDQueue<E> implements Queue {
     {
         if (m_elements.length == m_elementSize)
             changeCapacity(m_elements.length == 0 ? 1 : m_elements.length * FACTOR);
+    }
 
+    private int indexOf(Object o)
+    {
+        for (int i = 0; i < m_elementSize; ++i)
+            if (Objects.equals(o, m_elements[i]))
+                return i;
+
+        return -1;
     }
 
     @Override
@@ -39,7 +47,7 @@ public class CSDQueue<E> implements Queue {
     @Override
     public boolean contains(Object o)
     {
-        return false;
+       return indexOf(o) != -1;
     }
 
     @Override
@@ -70,13 +78,22 @@ public class CSDQueue<E> implements Queue {
     @Override
     public boolean remove(Object o)
     {
-        return false;
+        int indexToRemove = indexOf(o);
+        for (int i = indexToRemove; i < m_elementSize - 1; ++i)
+            m_elements[i] = m_elements[i + i];
+
+       m_elements[--m_elementSize] = null;
+
+       return true;
     }
 
     @Override
     public boolean addAll(Collection c)
     {
-        return false;
+        for (var item : c)
+            add(c);
+
+        return true;
     }
 
     @Override
@@ -97,7 +114,12 @@ public class CSDQueue<E> implements Queue {
     @Override
     public boolean removeAll(Collection c)
     {
-        return false;
+        for (int i = 0; i < m_elementSize; ++i)
+            m_elements[i] = null;
+
+        m_elementSize = 0;
+
+        return true;
     }
 
     @Override
