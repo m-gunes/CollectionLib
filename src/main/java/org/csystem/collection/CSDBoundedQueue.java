@@ -3,7 +3,6 @@ package org.csystem.collection;
 import org.csystem.collection.exception.FullStackException;
 
 import java.util.NoSuchElementException;
-import java.util.Queue;
 
 /**
  * Sınıf Çalışması: Eleman sayısını ctor ile alan ve queue dolduğunda RuntimeException sınıfından türetilmiş FullQueueException fırlatan CSDBoundedQueue sınıfını yazınız ve test ediniz.
