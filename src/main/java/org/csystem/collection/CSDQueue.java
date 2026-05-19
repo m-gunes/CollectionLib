@@ -7,10 +7,11 @@ import java.util.*;
  * @param <E>
  */
 
-public class CSDQueue<E> implements Queue {
+public class CSDQueue<E> implements Queue<E> {
     private E [] m_elements;
-    private int m_elementSize;
+    private int m_size;
     private final static int FACTOR = 2;
+    private static final int INITIAL_CAPACITY = 10;
 
     private void changeCapacity(int capacity)
     {
@@ -19,35 +20,40 @@ public class CSDQueue<E> implements Queue {
 
     private void checkCapacity()
     {
-        if (m_elements.length == m_elementSize)
+        if (m_elements.length == m_size)
             changeCapacity(m_elements.length == 0 ? 1 : m_elements.length * FACTOR);
     }
 
     private int indexOf(Object o)
     {
-        for (int i = 0; i < m_elementSize; ++i)
+        for (int i = 0; i < m_size; ++i)
             if (Objects.equals(o, m_elements[i]))
                 return i;
 
         return -1;
     }
 
+    public CSDQueue()
+    {
+        m_elements = (E[]) new Object[INITIAL_CAPACITY];
+    }
+
     @Override
     public int size()
     {
-        return m_elementSize;
+        return m_size;
     }
 
     @Override
     public boolean isEmpty()
     {
-        return m_elementSize == 0;
+        return m_size == 0;
     }
 
     @Override
     public boolean contains(Object o)
     {
-       return indexOf(o) != -1;
+        return indexOf(o) != -1;
     }
 
     @Override
@@ -59,7 +65,7 @@ public class CSDQueue<E> implements Queue {
             @Override
             public boolean hasNext()
             {
-                return index < m_elementSize;
+                return index < m_size;
             }
 
             @Override
@@ -73,7 +79,6 @@ public class CSDQueue<E> implements Queue {
         };
     }
 
-
     @Override
     public Object[] toArray()
     {
@@ -81,13 +86,13 @@ public class CSDQueue<E> implements Queue {
     }
 
     @Override
-    public Object[] toArray(Object[] a)
+    public <T> T[] toArray(T[] a)
     {
-        return new Object[0];
+        return null;
     }
 
     @Override
-    public boolean add(Object o)
+    public boolean add(E o)
     {
         return offer(o);
     }
@@ -96,51 +101,45 @@ public class CSDQueue<E> implements Queue {
     public boolean remove(Object o)
     {
         int indexToRemove = indexOf(o);
-        for (int i = indexToRemove; i < m_elementSize - 1; ++i)
+        for (int i = indexToRemove; i < m_size - 1; ++i)
             m_elements[i] = m_elements[i + i];
 
-       m_elements[--m_elementSize] = null;
-
-       return true;
-    }
-
-    @Override
-    public boolean addAll(Collection c)
-    {
-        for (var item : c)
-            add(c);
+        m_elements[--m_size] = null;
 
         return true;
     }
 
     @Override
-    public void clear()
+    public boolean addAll(Collection<? extends E> c)
     {
-        for (int i = 0; i < m_elementSize; ++i)
-            m_elements[i] = null;
+        for (var item : c)
+            add(item);
 
-        m_elementSize = 0;
+        return true;
     }
 
     @Override
-    public boolean retainAll(Collection c)
+    public boolean removeAll(Collection<?> c)
+    {
+        c.forEach(e -> e = null);
+
+//        for (int i = 0; i < m_size; ++i)
+//            m_elements[i] = null;
+//
+//        m_size = 0;
+
+        return true;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c)
     {
         return false;
     }
 
-    @Override
-    public boolean removeAll(Collection c)
-    {
-        for (int i = 0; i < m_elementSize; ++i)
-            m_elements[i] = null;
-
-        m_elementSize = 0;
-
-        return true;
-    }
 
     @Override
-    public boolean containsAll(Collection c)
+    public boolean containsAll(Collection<?> c)
     {
         for (var item : c)
             if (!contains(item))
@@ -150,48 +149,57 @@ public class CSDQueue<E> implements Queue {
     }
 
     @Override
-    public boolean offer(Object o)
+    public void clear()
+    {
+        for (int i = 0; i < m_size; ++i)
+            m_elements[i] = null;
+
+        m_size = 0;
+    }
+
+    @Override
+    public boolean offer(E o)
     {
         // check capacity
         checkCapacity();
-        m_elements[m_elementSize++] = (E) o;
+        m_elements[m_size++] = o;
         return true;
     }
 
     @Override
-    public Object remove()
+    public E remove()
     {
         var obj = element();
 
-        for (int i = 0; i < m_elementSize - 1; ++i)
+        for (int i = 0; i < m_size - 1; ++i)
             m_elements[i] = m_elements[i + 1];
 
-        m_elements[--m_elementSize] = null;
+        m_elements[--m_size] = null;
         return obj;
     }
 
     @Override
-    public Object poll()
+    public E poll()
     {
         var obj = peek();
-        System.arraycopy(m_elements, 1, m_elements, 0, --m_elementSize);
+        System.arraycopy(m_elements, 1, m_elements, 0, --m_size);
 
         return obj;
     }
 
     @Override
-    public Object element()
+    public E element()
     {
-        if (m_elementSize == 0)
+        if (m_size == 0)
             throw new NoSuchElementException("There is no element!");
 
         return m_elements[0];
     }
 
     @Override
-    public Object peek()
+    public E peek()
     {
-        if (m_elementSize == 0)
+        if (m_size == 0)
             return  null;
 
         return m_elements[0];
