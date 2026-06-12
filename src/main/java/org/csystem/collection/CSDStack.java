@@ -1,17 +1,22 @@
 package org.csystem.collection;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Sınıf Çalışması: <p>
+ * Sınıf Çalışması: </br>
  * Yalnızca Object sınıfından türetilen ve dinamik olarak büyüyebilen aşağıdaki CSDStack sınıfını yazınız.
  *
- * <p>
- * Açıklamalar: <p>
+ * </br>
+ * <strongAçıklamalar:</strong> </br>
  *
- * <p>Sınıfın public bölümünü değiştirmeden istediğiniz eklemeyi yapabilirsiniz
- * <p>JavaSE'nin Stack<E> sınıfı kullanılmayacaktır.
+ * <ul>
+ *      <li>Sınıfın public bölümünü değiştirmeden istediğiniz eklemeyi yapabilirsiniz</li>
+ *      <li>JavaSE'nin Stack<E> sınıfı kullanılmayacaktır.</li>
+ * </ul>
  */
+
+
 // herhangi bir collection siniftan turemeyecek ama iceride kullanabilirsiniz. stack disinda
 
 /**
@@ -52,32 +57,32 @@ public class CSDStack<E> {
 
         // v1 use ArrayList
 
-    private ArrayList<E> m_arrayListInstance;
+    private final List<E> m_list;
 
     public CSDStack()
     {
-        m_arrayListInstance = new ArrayList<E>();
+        m_list = new ArrayList<E>();
     }
 
     public E peek()
     {
-        return m_arrayListInstance.get(m_arrayListInstance.size() - 1);
+        return m_list.get(m_list.size() - 1);
     }
 
     public E pop()
     {
-        return m_arrayListInstance.remove(m_arrayListInstance.size() - 1);
+        return m_list.remove(m_list.size() - 1);
     }
 
     public E push(E item)
     {
-        m_arrayListInstance.add(item);
+        m_list.add(item);
         return item;
     }
 
     public int search(E item)
     {
-        var index = m_arrayListInstance.lastIndexOf(item);
-        return index >= 0 ? m_arrayListInstance.size() - index : index;
+        var index = m_list.lastIndexOf(item);
+        return index >= 0 ? m_list.size() - index : index;
     }
 }
